@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Russian &amp; Indian Tourist Insights: Thailand — Malee Group (mock-up)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #f4f1e8;
+      --ink: #1b241c;
+      --muted: #5a635a;
+      --card: #fffdf8;
+      --line: #e0d8c8;
+      --green: #1b6b48;
+      --green-soft: #e7f4ec;
+      --amber: #8a5a10;
+      --amber-soft: #f7eed6;
+      --red: #9a2e2e;
+      --red-soft: #f8e7e7;
+      --blue: #245e7a;
+      --blue-soft: #e7f1f6;
+      --chip: #efe8d8;
+      --header: #163524;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Libre Franklin", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    header.app {
+      background: var(--header);
+      color: #f6f3eb;
+      padding: 28px 20px 22px;
+    }
+    header.app .wrap, main, footer { max-width: 1180px; margin: 0 auto; }
+    header.app h1 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(28px, 4vw, 40px);
+      margin: 8px 0 8px;
+      letter-spacing: -0.02em;
+    }
+    header.app p { margin: 0 0 8px; color: #d7e3d9; max-width: 78ch; }
+    .kicker { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #b7cfc0; }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+      vertical-align: middle;
+    }
+    .badge.mock { background: #f0d48a; color: #4a3500; }
+    .badge.real { background: var(--green-soft); color: var(--green); }
+    .badge.sample { background: #f3d27a; color: #4a3500; }
+    .badge.prelim { background: var(--blue-soft); color: var(--blue); }
+    .badge.calc { background: var(--chip); color: #3d463d; }
+    .badge.draft { background: #ecd9f0; color: #5a2a6a; }
+    main { padding: 24px 20px 64px; }
+    h2 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-weight: 600;
+      font-size: 26px;
+      margin: 0 0 8px;
+    }
+    h3 { font-size: 15px; margin: 0 0 6px; font-weight: 650; }
+    section.block { margin: 28px 0 36px; }
+    .lead { color: var(--muted); margin: 0 0 16px; max-width: 82ch; }
+    .nav {
+      display: flex; flex-wrap: wrap; gap: 8px 14px;
+      margin: 16px 0 0; font-size: 14px;
+    }
+    .nav a { color: #cfe3d5; }
+    .how, .tiles, .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin: 16px 0 8px;
+    }
+    .tiles.four { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .card, .how article, .tile {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 16px 14px;
+    }
+    .big {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: clamp(28px, 4.4vw, 40px);
+      font-weight: 600;
+      line-height: 1.05;
+      margin: 4px 0;
+    }
+    .unit { font-size: 14px; color: var(--muted); font-weight: 500; }
+    .src, .src a { font-size: 12px; color: var(--muted); }
+    .src a { text-decoration: underline; text-underline-offset: 2px; color: var(--blue); }
+    .chg { font-size: 13px; margin: 6px 0; }
+    .up { color: var(--green); }
+    .down { color: var(--red); }
+    .flat { color: var(--muted); }
+    .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 860px) { .charts { grid-template-columns: 1fr; } }
+    .chart-card canvas { width: 100% !important; height: 280px !important; }
+    .note { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--card); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; background: #faf6ee; }
+    footer { padding: 24px 20px 48px; color: var(--muted); font-size: 13px; }
+    .sample-banner {
+      background: #fff4cc; border: 1px solid #e6c96a; color: #4a3500;
+      border-radius: 12px; padding: 12px 14px; margin: 16px 0; font-size: 14px;
+    }
+    ul.plain { margin: 8px 0 0; padding-left: 18px; }
+    ul.plain li { margin: 0 0 6px; }
+    .ad {
+      background: var(--card);
+      border: 1px dashed #c9b58a;
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .ad .meta { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); font-weight: 700; }
+    .ad h4 { margin: 4px 0 6px; font-size: 16px; }
+    .ad p { margin: 0; color: var(--muted); }
+    .steps { display: grid; grid-template-columns: 48px 1fr; gap: 8px 12px; align-items: start; }
+    .steps .n {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--green-soft); color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 13px;
+    }
+
+    .tr { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; font-weight: 400; line-height: 1.4; }
+    .reco {
+      background: var(--green-soft);
+      border: 1px solid #c5dfd0;
+      border-radius: 14px;
+      padding: 16px 18px 12px;
+      margin: 0 0 28px;
+    }
+    .reco h2 { margin-bottom: 4px; }
+    .reco ol { margin: 10px 0 0; padding-left: 22px; }
+    .reco li { margin: 0 0 12px; }
+    .reco .mark { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green); }
+
+    a { color: var(--blue); }
+  </style>
+</head>
+<body>
+  <header class="app">
+    <div class="wrap">
+      <div class="kicker">Malee Group PCL (MALEE.BK) · Head of AI desk · Public data only</div>
+      <h1>Russian &amp; Indian Tourist Insights: Thailand</h1>
+      <p>A simple picture of two of Thailand’s most valuable visitor markets — how many come, what they type into Google in their own languages, what they look for on the trip, and how Malee could meet them. Built as a mock-up after Chairman Champ backed SEO/SEM for Russian, Indian and later Middle East travellers, plus airport and on-ground activations.</p>
+      <p><span class="badge mock">Mock-up</span> &nbsp; Compiled 17 November 2026 (Asia/Bangkok). Every real figure has a source link and an as-of date. Sample, calculated or draft items are marked <span class="badge sample">Sample</span> <span class="badge calc">Calculated</span> <span class="badge draft">Draft</span>. Arrival counts are preliminary.</p>
+      <nav class="nav">
+        <a href="#reco">Recommendations</a>
+        <a href="#read">How to read this</a>
+        <a href="#arrivals">Arrivals</a>
+        <a href="#phuket">Phuket</a>
+        <a href="#search">What they search</a>
+        <a href="#journey">Interests &amp; journey</a>
+        <a href="#capture">How Malee can capture it</a>
+        <a href="#sources">Sources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="block reco" id="reco">
+      <div class="mark">Proposal · ข้อเสนอ</div>
+      <h2>Recommendations for the Marketing Team</h2>
+      <p class="tr">ข้อเสนอสำหรับทีมการตลาด</p>
+      <p class="lead">Five one-line actions grounded in the figures on this page. Each is a proposal, not an approved plan.</p>
+      <ol>
+        <li>
+          <strong>Proposal:</strong> For Russian travellers, run search on Yandex as well as Google, and write pages and ads in Russian (Cyrillic).
+          <span class="tr">ข้อเสนอ: สำหรับนักท่องเที่ยวรัสเซีย ให้ทำโฆษณาและหน้าเว็บบนทั้ง Yandex และ Google เป็นภาษารัสเซีย (ตัวซีริลลิก)</span>
+        </li>
+        <li>
+          <strong>Proposal:</strong> For Indian travellers, focus paid search on Google, in English and Hindi, around trip-planning and coconut-water terms.
+          <span class="tr">ข้อเสนอ: สำหรับนักท่องเที่ยวอินเดีย ให้เน้นโฆษณาบน Google ทั้งภาษาอังกฤษและฮินดี โดยใช้คำค้นเกี่ยวกับการวางแผนทริปและน้ำมะพร้าว</span>
+        </li>
+        <li>
+          <strong>Proposal:</strong> Treat coconut-water search demand as a ready opening for Malee Coco, in both home-market queries and travel content.
+          <span class="tr">ข้อเสนอ: ใช้ความต้องการค้นหาคำว่าน้ำมะพร้าวเป็นโอกาสของ Malee Coco ทั้งในตลาดในประเทศและคอนเทนต์ท่องเที่ยว</span>
+        </li>
+        <li>
+          <strong>Proposal:</strong> Trial Malee Coco sampling at Phuket (HKT) and Suvarnabhumi (BKK) airports during high season.
+          <span class="tr">ข้อเสนอ: ทดลองแจกชิม Malee Coco ที่สนามบินภูเก็ต (HKT) และสุวรรณภูมิ (BKK) ในช่วงไฮซีซัน</span>
+        </li>
+        <li>
+          <strong>Proposal:</strong> Time SEO, SEM and airport activations for November–December, when both arrivals and search interest peak.
+          <span class="tr">ข้อเสนอ: จัดจังหวะ SEO, SEM และการจัดกิจกรรมที่สนามบินในช่วงพฤศจิกายน–ธันวาคม ซึ่งเป็นช่วงที่ทั้งจำนวนผู้เดินทางและความสนใจในการค้นหาสูงสุด</span>
+        </li>
+      </ol>
+    </section>
+
+    <section class="block" id="read">
+      <h2>How to read this</h2>
+      <p class="lead">Look at the big arrival numbers first, then the charts, then the search terms people actually type. This page uses only public figures. It is not a live campaign dashboard, and it has not been published.</p>
+      <div class="how">
+        <article>
+          <strong>Green and red on arrivals</strong>
+          Green means more visitors than the same period a year earlier. Red means fewer. 2026 year-to-date figures are preliminary.
+        </article>
+        <article>
+          <strong>Google Trends is not volume</strong>
+          Charts show relative interest from 0 to 100 inside one comparison. A “50” is not 50,000 searches, and a number on one chart cannot be compared with a number on another.
+        </article>
+        <article>
+          <strong>Yandex matters for Russia</strong>
+          In Russia, Yandex is the main search engine. Google Trends is useful, but live keyword volumes for Russian campaigns should also come from Yandex Wordstat.
+        </article>
+        <article>
+          <strong>Ideas are proposals</strong>
+          SEO, ads, airport sampling and on-ground activations are proposals for discussion, not approved plans. Ad copy is marked draft.
+        </article>
+        <article>
+          <strong>Translations</strong>
+          Every Russian (Cyrillic) and Hindi term has an English and a Thai translation next to it, in a table column or in small grey text underneath.
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="arrivals">
+      <h2>1. Arrivals: Russia and India to Thailand</h2>
+      <p class="lead">India is Thailand’s 3rd-largest source market by arrivals, Russia the 4th. By tourism receipts in 2025, Russia was 2nd and India 3rd — both high-value markets. All arrival figures are preliminary and count visitors by nationality.</p>
+      <div class="tiles four">
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">Russia · full year 2025</div>
+          <div class="big">1,898,837</div>
+          <div class="unit">arrivals · 4th market · 5.8% of all foreign arrivals</div>
+          <div class="chg up">▲ +8.8% vs 2024 (1,745,327)</div>
+          <p class="src">As of full-year 2025 (preliminary). Source: Ministry of Tourism and Sports, via <a href="https://thailandstats.com/tourism/visitors-from/russia" target="_blank" rel="noopener">ThailandStats</a> (updated 23 Sep 2026) and MOTS year-end summary in <a href="https://www.nationthailand.com/news/general/40060629" target="_blank" rel="noopener">The Nation, 1 Jan 2026</a>.</p>
+        </div>
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">India · full year 2025</div>
+          <div class="big">2,487,319</div>
+          <div class="unit">arrivals · 3rd market · 7.5% of all foreign arrivals</div>
+          <div class="chg up">▲ +16.8% vs 2024 (2,129,149)</div>
+          <p class="src">As of full-year 2025 (preliminary). Source: MOTS, via <a href="https://thailandstats.com/tourism/visitors-from/india" target="_blank" rel="noopener">ThailandStats</a> (updated 23 Sep 2026) and <a href="https://www.nationthailand.com/news/general/40060629" target="_blank" rel="noopener">The Nation, 1 Jan 2026</a>.</p>
+        </div>
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">Russia · Jan–Oct 2026</div>
+          <div class="big">1,414,341</div>
+          <div class="unit">arrivals · still 4th · <span class="badge prelim">Preliminary</span></div>
+          <div class="chg down">▼ about −0.3% vs Jan–Oct 2025 (1,418,101)</div>
+          <p class="src">As of 1 Jan–31 Oct 2026, released 2 Nov 2026. Source: MOTS, via <a href="https://www.nationthailand.com/news/tourism/40073019" target="_blank" rel="noopener">The Nation, 2 Nov 2026</a>. The 2025 comparison and percentage are <span class="badge calc">Calculated</span> from official monthly 2025 figures on <a href="https://thailandstats.com/tourism/visitors-from/russia" target="_blank" rel="noopener">ThailandStats</a>; Tourdom.ru reported the same −0.27%.</p>
+        </div>
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">India · Jan–Oct 2026</div>
+          <div class="big">1,924,417</div>
+          <div class="unit">arrivals · still 3rd · <span class="badge prelim">Preliminary</span></div>
+          <div class="chg down">▼ about −3.0% vs Jan–Oct 2025 (1,984,859)</div>
+          <p class="src">As of 1 Jan–31 Oct 2026, released 2 Nov 2026. Source: MOTS, via <a href="https://www.nationthailand.com/news/tourism/40073019" target="_blank" rel="noopener">The Nation, 2 Nov 2026</a>. The 2025 comparison and percentage are <span class="badge calc">Calculated</span> from official monthly 2025 figures on <a href="https://thailandstats.com/tourism/visitors-from/india" target="_blank" rel="noopener">ThailandStats</a>.</p>
+        </div>
+      </div>
+      <p class="note">June 2026 MOTS figures exclude 22–25 June because of a recording-system outage, so any comparison that includes June 2026 is not exactly like-for-like (<a href="https://thailandstats.com/tourism/visitors-from/russia" target="_blank" rel="noopener">ThailandStats methodology</a>). The Jan–Oct 2026 totals above are the ministry’s published cumulative figures.</p>
+
+      <h3 style="margin-top:22px">Tourism receipts in 2025 — why these two markets matter</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Market</th><th>2025 receipts</th><th>Change vs 2024</th><th>Rank by receipts</th><th>Implied spend per arrival</th><th>Source</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Russia</td>
+              <td>฿113,950 million</td>
+              <td class="up">+9.77%</td>
+              <td>2nd (behind China)</td>
+              <td>about ฿60,010 <span class="badge calc">Calculated</span></td>
+              <td class="src">MOTS year-end summary, <a href="https://www.nationthailand.com/news/general/40060629" target="_blank" rel="noopener">The Nation, 1 Jan 2026</a>. Implied spend = receipts ÷ 1,898,837 arrivals, calculated on 17 Nov 2026.</td>
+            </tr>
+            <tr>
+              <td>India</td>
+              <td>฿93,862 million</td>
+              <td class="up">+22.61%</td>
+              <td>3rd</td>
+              <td>about ฿37,736 <span class="badge calc">Calculated</span></td>
+              <td class="src">Same MOTS year-end summary. Implied spend = receipts ÷ 2,487,319 arrivals, calculated on 17 Nov 2026. A later TAT briefing cited a published average of ฿36,354 per trip and ฿6,203 per day, with a 7.17-day stay (<a href="https://www.nationthailand.com/news/tourism/40069726" target="_blank" rel="noopener">The Nation, 13 Aug 2026</a>).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin-top:22px">Monthly seasonality</h3>
+      <p class="lead">Russians come overwhelmingly in the cool season: December 2025 was the busiest month (266,213). The quietest was June (73,616). Indians travel more evenly through the year, with their 2025 peak also in December (266,228) and a second bulge around May. Search interest, shown later, follows a similar rhythm.</p>
+      <div class="charts">
+        <div class="card chart-card">
+          <h3>Russia — monthly arrivals</h3>
+          <canvas id="chartRuArrivals"></canvas>
+          <p class="src">2025 full year and Jan–Aug 2026 from MOTS via <a href="https://thailandstats.com/tourism/visitors-from/russia" target="_blank" rel="noopener">ThailandStats</a>, as of August 2026 (page updated 23 Sep 2026). June 2026 is incomplete. Official monthly figures for Sep and Oct 2026 were not on that page when this mock-up was compiled.</p>
+        </div>
+        <div class="card chart-card">
+          <h3>India — monthly arrivals</h3>
+          <canvas id="chartInArrivals"></canvas>
+          <p class="src">2025 full year and Jan–Aug 2026 from MOTS via <a href="https://thailandstats.com/tourism/visitors-from/india" target="_blank" rel="noopener">ThailandStats</a>, as of August 2026 (page updated 23 Sep 2026). June 2026 is incomplete.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:22px">Official targets and what the last two months would need to do</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Market</th><th>Stated 2026 target</th><th>Already arrived, Jan–Oct 2026</th><th>Needed in Nov–Dec to hit the target</th><th>Nov+Dec 2025 actual</th><th>Note</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Russia</td>
+              <td>more than 2 million</td>
+              <td>1,414,341</td>
+              <td>about 585,659 <span class="badge calc">Calculated</span></td>
+              <td>480,736 <span class="badge calc">Calculated</span></td>
+              <td class="src">Target set by the tourism minister, reported <a href="https://www.thaiexaminer.com/thai-news-foreigners/2026/08/09/thailand-pushes-on-to-attract-more-than-2-million-russian-tourists-in-2026-despite-the-pattaya-murders/" target="_blank" rel="noopener">Thai Examiner, 9 Aug 2026</a>. Needed figure is 2,000,000 minus the official Jan–Oct total. Nov+Dec 2025 is 214,523 + 266,213 from <a href="https://thailandstats.com/tourism/visitors-from/russia" target="_blank" rel="noopener">ThailandStats</a>. That would require about 22% more Russians in Nov–Dec than last year. This is arithmetic, not a forecast.</td>
+            </tr>
+            <tr>
+              <td>India</td>
+              <td>TAT expects 2.55 million in 2026, then 2.7 million in 2027</td>
+              <td>1,924,417</td>
+              <td>about 625,583 to reach 2.55 million <span class="badge calc">Calculated</span></td>
+              <td>502,460 <span class="badge calc">Calculated</span></td>
+              <td class="src">TAT expectation reported in <a href="https://www.nationthailand.com/news/tourism/40069726" target="_blank" rel="noopener">The Nation, 13 Aug 2026</a>. Nov+Dec 2025 is 236,232 + 266,228 from <a href="https://thailandstats.com/tourism/visitors-from/india" target="_blank" rel="noopener">ThailandStats</a>. Hitting 2.55 million would need about 25% more Indians in Nov–Dec than last year. This is arithmetic, not a forecast.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block" id="phuket">
+      <h2>Phuket — where many of these visitors actually land</h2>
+      <p class="lead">Phuket is the centre of gravity for Russians, and a major destination for Indians. Two public counting methods are in use. Airport immigration counts people who clear passport control at Phuket; it misses Russians or Indians who entered in Bangkok and then flew on domestically. TAT visitor figures presented to the province can differ. Do not mix the two series.</p>
+      <div class="tiles">
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">Russia at Phuket airport · 2025</div>
+          <div class="big">1.12 million</div>
+          <div class="unit">airport immigration arrivals · largest foreign market, about 20% of international traffic</div>
+          <p class="src">As of full-year 2025, preliminary Immigration figures reported by <a href="https://www.novostiphuketa.asia/tailand-prinyal-rekordnye-1-899-mln-turistov-iz-rossii-za-god-23330.php" target="_blank" rel="noopener">Novosti Phuketa, 6 Jan 2026</a>. C9 Hotelworks rounded the same market to about 1.1 million in its <a href="https://c9hotelworks.com/wp-content/uploads/2026/03/Phuket-Hotel-Tourism-Update.pdf" target="_blank" rel="noopener">Phuket Hotel &amp; Tourism Update 2026</a>. The real number staying on the island is higher once Bangkok-entry transfers are included.</p>
+        </div>
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">India at Phuket airport · 2025</div>
+          <div class="big">621,100</div>
+          <div class="unit">airport immigration arrivals · 2nd foreign market at the airport</div>
+          <p class="src">Same Immigration ranking, <a href="https://www.novostiphuketa.asia/tailand-prinyal-rekordnye-1-899-mln-turistov-iz-rossii-za-god-23330.php" target="_blank" rel="noopener">Novosti Phuketa, 6 Jan 2026</a>: Russia 1.12m, India 621,100, China 545,000. C9 said India was among the fastest-growing markets in 2025 (+38%).</p>
+        </div>
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">Russia at Phuket · Jan–Sep 2026</div>
+          <div class="big">703,200</div>
+          <div class="unit">passenger arrivals · still no. 1 · <span class="badge prelim">Preliminary</span></div>
+          <div class="chg down">▼ −6.2% vs the same period last year</div>
+          <p class="src">C9 Hotelworks, reported by <a href="https://www.traveldailynews.asia/destinations/phuket-tourism-investment-luxury-hospitality-growth/" target="_blank" rel="noopener">TravelDailyNews Asia</a> and in a <a href="https://www.linkedin.com/posts/c9hotelworks_activity-7520283295889317888-qmDU" target="_blank" rel="noopener">C9 / Bill Barnett market briefing</a>. As of January–September 2026.</p>
+        </div>
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">TAT count, Jan–Aug 2026</div>
+          <div class="big">661,876</div>
+          <div class="unit">Russian visitors, TAT figures to the province</div>
+          <p class="src">TAT figures presented 28 Sep 2026: Russia 661,876, China 459,218, India 393,277. Total visitors 9,200,166 (6,790,293 foreign; 2,409,873 Thai), down 1.76%. Source: <a href="https://www.thephuketnews.com/phuket-arrivals-dip-as-four-new-direct-routes-set-to-launch-101767.php" target="_blank" rel="noopener">The Phuket News, 29 Sep 2026</a>. This is a different series from the C9 / airport figures above.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="search">
+      <h2>2. What they search — in their own languages</h2>
+      <p class="lead">Campaigns should be written in the language people actually type. Russians search in Cyrillic. Many Indians search for Thailand trips in English, and also use Hindi for everyday product terms such as नारियल पानी <span class="tr" style="display:inline">EN: coconut water · TH: น้ำมะพร้าว</span>.</p>
+
+      <h3>Where they search</h3>
+      <div class="tiles">
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">Russia · search engines · Oct 2026</div>
+          <div class="big">Yandex 70.22%</div>
+          <div class="unit">Google 28.36% · Bing 0.82%</div>
+          <p class="src">As of October 2026. Source: <a href="https://gs.statcounter.com/search-engine-market-share/all/russian-federation" target="_blank" rel="noopener">Statcounter Global Stats, Russian Federation</a>. For Russian campaigns, use both Google and Yandex. Keyword volumes for Yandex come from <a href="https://wordstat.yandex.com/" target="_blank" rel="noopener">Yandex Wordstat</a> (login required; not pulled for this mock-up).</p>
+        </div>
+        <div class="tile">
+          <div class="kicker" style="color:var(--muted)">India · search engines · Oct 2026</div>
+          <div class="big">Google 98.06%</div>
+          <div class="unit">Bing 1.11% · Yahoo 0.35%</div>
+          <p class="src">As of October 2026. Source: <a href="https://gs.statcounter.com/search-engine-market-share/all/india" target="_blank" rel="noopener">Statcounter Global Stats, India</a>. Google Ads / Keyword Planner is the main volume tool for India.</p>
+        </div>
+      </div>
+
+      <div class="sample-banner">
+        <strong>How to get real search volumes.</strong> Google Trends, used below, only shows relative interest (0–100), not how many times a phrase was typed. For campaign planning, Marketing should pull exact monthly volumes from Google Keyword Planner (India and the Google share of Russia) and from Yandex Wordstat (Russia). Those tools need a Google Ads account and a Yandex login, which this mock-up does not have. Until then, the query lists mix <span class="badge real">real related queries</span> from Trends with <span class="badge sample">example</span> campaign themes.
+      </div>
+
+      <h3 style="margin-top:22px">Russia — destination interest on Google</h3>
+      <p class="lead">Among Russians comparing Phuket, Pattaya and Bangkok on Google, Phuket is the usual leader. Interest rises towards the November–January peak season, in step with arrivals. Bangkok shows an unusual mid-July 2025 spike; Russian arrivals that month were only 81,098, so that spike is much more likely news than a travel wave.</p>
+      <div class="charts">
+        <div class="card chart-card">
+          <h3>Google Trends in Russia: Пхукет, Паттайя, Бангкок</h3>
+          <p class="tr">EN: Phuket, Pattaya, Bangkok · TH: ภูเก็ต, พัทยา, กรุงเทพฯ</p>
+          <canvas id="chartRuDest"></canvas>
+          <p class="src">Relative interest, 0–100, within this three-term comparison only. Monthly averages of weekly Trends data, geo=RU, 1 Jan 2025–16 Nov 2026, retrieved 17 Nov 2026 with pytrends from <a href="https://trends.google.com/trends/explore?geo=RU&amp;q=%D0%9F%D1%85%D1%83%D0%BA%D0%B5%D1%82,%D0%9F%D0%B0%D1%82%D1%82%D0%B0%D0%B9%D1%8F,%D0%91%D0%B0%D0%BD%D0%B3%D0%BA%D0%BE%D0%BA" target="_blank" rel="noopener">Google Trends</a>. Latest week 15 Nov 2026 is marked partial by Google. November 2026 is an incomplete month.</p>
+        </div>
+        <div class="card chart-card">
+          <h3>Google Trends in Russia: кокосовая вода (standalone)</h3>
+          <p class="tr">EN: coconut water · TH: น้ำมะพร้าว</p>
+          <canvas id="chartRuCoco"></canvas>
+          <p class="src">Relative interest, 0–100, for this term alone (not comparable with the destination chart). Same method, geo=RU, retrieved 17 Nov 2026. The series is noisy — typical of a smaller query — with a higher period in May–July 2026. Related queries are about buying it and its benefits, so much of this interest may be domestic Russian shopping rather than trip planning.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:18px">What Russians type next — related queries for «Пхукет»</h3>
+      <p class="tr">EN: Phuket · TH: ภูเก็ต</p>
+      <p class="note">Real Google Trends “top” and “rising” related queries, geo=RU, last 12 months, retrieved 17 Nov 2026. The top score of 100 is the most closely related query in this set, not a volume.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Russian query</th><th>English</th><th>Thai</th><th>Role</th><th>Trends score</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>тайланд пхукет</td><td>Thailand Phuket</td><td>ไทย ภูเก็ต</td><td>Top related</td><td>100</td></tr>
+            <tr><td>отель пхукет / отели пхукет</td><td>Phuket hotel(s)</td><td>โรงแรมภูเก็ต</td><td>Top related</td><td>89 / 60</td></tr>
+            <tr><td>пхукет туры / туры на пхукет</td><td>Phuket tours / tours to Phuket</td><td>ทัวร์ภูเก็ต / ทัวร์ไปภูเก็ต</td><td>Top related</td><td>81 / 44</td></tr>
+            <tr><td>аэропорт пхукет</td><td>Phuket airport</td><td>สนามบินภูเก็ต</td><td>Top related</td><td>47</td></tr>
+            <tr><td>экскурсии пхукет</td><td>Phuket excursions</td><td>ทัวร์ชมเมืองภูเก็ต</td><td>Top related</td><td>35</td></tr>
+            <tr><td>билеты на пхукет</td><td>tickets to Phuket</td><td>ตั๋วไปภูเก็ต</td><td>Top + rising</td><td>34 · rising +60%</td></tr>
+            <tr><td>новосибирск пхукет / спб пхукет</td><td>Novosibirsk–Phuket / St Petersburg–Phuket</td><td>โนโวซีบีสค์–ภูเก็ต / เซนต์ปีเตอร์สเบิร์ก–ภูเก็ต</td><td>Top related</td><td>34 / 30</td></tr>
+            <tr><td>пхукет сезон</td><td>Phuket season</td><td>ฤดูท่องเที่ยวภูเก็ต</td><td>Top related</td><td>32</td></tr>
+            <tr><td>самолет москва пхукет</td><td>Moscow–Phuket flights</td><td>เที่ยวบินมอสโก–ภูเก็ต</td><td>Rising</td><td>+150%</td></tr>
+            <tr><td>москва пхукет авиабилеты</td><td>Moscow–Phuket air tickets</td><td>ตั๋วเครื่องบินมอสโก–ภูเก็ต</td><td>Rising</td><td>+140%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Related queries for «туры на пхукет» <span class="tr" style="display:inline">EN: tours to Phuket · TH: ทัวร์ไปภูเก็ต</span> also point to departure cities: Moscow, Novosibirsk, St Petersburg, Yekaterinburg and Khabarovsk, plus «горящие туры» <span class="tr" style="display:inline">EN: last-minute tours · TH: ทัวร์ราคาพิเศษช่วงนาทีสุดท้าย</span>. Source: Google Trends related queries, geo=RU, last 12 months, 17 Nov 2026.</p>
+      <p class="note">Related queries for «кокосовая вода» <span class="tr" style="display:inline">EN: coconut water · TH: น้ำมะพร้าว</span>: «кокосовая вода купить» <span class="tr" style="display:inline">EN: buy coconut water · TH: ซื้อน้ำมะพร้าว</span> (100), «кокосовая вода польза» <span class="tr" style="display:inline">EN: coconut water benefits · TH: ประโยชน์ของน้ำมะพร้าว</span> / «чем полезна кокосовая вода» <span class="tr" style="display:inline">EN: what coconut water is good for · TH: น้ำมะพร้าวมีประโยชน์อย่างไร</span>. Same retrieval.</p>
+
+      <h3 style="margin-top:22px">India — trip planning interest on Google</h3>
+      <p class="lead">Indians search Bangkok more than Phuket or Pattaya. “Thailand trip” and “Thailand package” peak around November–December. “Thailand package” interest in 2026 is running below last year’s winter peak, which is consistent with slightly softer year-to-date arrivals. “Coconut water” is a large everyday health-and-grocery query in India, not only a travel query — which is still useful for Malee Coco.</p>
+      <div class="charts">
+        <div class="card chart-card">
+          <h3>Google Trends in India: Bangkok, Phuket, Pattaya</h3>
+          <canvas id="chartInDest"></canvas>
+          <p class="src">Relative interest, 0–100, within this three-term comparison only. Monthly averages, geo=IN, 1 Jan 2025–16 Nov 2026, retrieved 17 Nov 2026 from <a href="https://trends.google.com/trends/explore?geo=IN&amp;q=Phuket,Pattaya,Bangkok" target="_blank" rel="noopener">Google Trends</a>. Latest week 15 Nov 2026 is partial.</p>
+        </div>
+        <div class="card chart-card">
+          <h3>Google Trends in India: Thailand trip, package, honeymoon</h3>
+          <canvas id="chartInTrip"></canvas>
+          <p class="src">Relative interest, 0–100, within this three-term comparison only. Same method, geo=IN, retrieved 17 Nov 2026. “Thailand trip” peaked in Dec 2025; “Thailand package” peaked in Nov 2025 and has been lower through 2026.</p>
+        </div>
+      </div>
+      <div class="charts" style="margin-top:14px">
+        <div class="card chart-card">
+          <h3>Google Trends in India: coconut water vs Thai food</h3>
+          <canvas id="chartInCoco"></canvas>
+          <p class="src">Relative interest, 0–100, within a comparison that also included the much smaller phrase “Thailand vegetarian” (too thin to plot reliably). geo=IN, retrieved 17 Nov 2026. Coconut water peaks in India’s hot season (around April). Related rising brand queries include Noice, Coco Mama, Real Activ, Yu, Storia, Paper Boat and Raw Pressery — a competitive home market for packaged coconut water.</p>
+        </div>
+        <div class="card chart-card">
+          <h3>Google Trends in India: trip-planning phrases</h3>
+          <canvas id="chartInTodo"></canvas>
+          <p class="src">Relative interest, 0–100, within this three-term comparison only: “Phuket things to do”, “Thailand itinerary”, “Thai fruit”. geo=IN, retrieved 17 Nov 2026. “Thailand itinerary” jumped in Nov 2025–Feb 2026, ahead of and during the winter travel period.</p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:18px">What Indians type next — related queries</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Query (India)</th><th>Language</th><th>What it tells us</th><th>Evidence</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>phuket krabi / krabi / bangkok / koh samui</td><td>English</td><td>Multi-stop Andaman + Bangkok itineraries</td><td>Trends related to “Phuket”, geo=IN, last 12 months, 17 Nov 2026</td></tr>
+            <tr><td>phuket weather / phuket airport / patong beach / old town phuket</td><td>English</td><td>Practical planning and specific beaches</td><td>Same related-query set</td></tr>
+            <tr><td>coconut water can / tender coconut water / coconut water benefits / coconut water empty stomach</td><td>English</td><td>Packaged and fresh coconut water, health-led</td><td>Trends related to “coconut water”, geo=IN, 17 Nov 2026</td></tr>
+            <tr><td>नारियल पानी<span class="tr">EN: coconut water · TH: น้ำมะพร้าว</span></td><td>Hindi</td><td>Everyday Hindi term for coconut water; interest is real and seasonal</td><td>Standalone Trends series, geo=IN, retrieved 17 Nov 2026 (shown in the sources notes; not plotted against cricket-heavy «थाईलैंड» <span class="tr" style="display:inline">EN: Thailand · TH: ประเทศไทย</span>)</td></tr>
+            <tr><td>Thailand trip / Thailand package / Thailand honeymoon / Thailand itinerary</td><td>English</td><td>Core trip-planning vocabulary, including weddings/honeymoons</td><td>Interest-over-time charts above</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">A caution on Hindi: related queries for the single word «थाईलैंड» <span class="tr" style="display:inline">EN: Thailand · TH: ประเทศไทย</span> are dominated by women’s cricket, not tourism. Travel intent in India is clearer in English phrases, or in tighter Hindi terms such as «थाईलैंड यात्रा» <span class="tr" style="display:inline">EN: Thailand trip · TH: ทริปประเทศไทย</span>. Those tighter Hindi travel phrases were too thin for a reliable Trends chart in this mock-up.</p>
+
+      <h3 style="margin-top:18px">Example keyword themes for campaigns</h3>
+      <p class="lead">The first two columns are grounded in the real Trends queries above. Extra campaign ideas are marked sample until Keyword Planner and Wordstat volumes are pulled.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Market</th><th>Theme</th><th>Example queries</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Russia</td><td>Destination + hotels + tours</td><td>пхукет, отели пхукет, туры на пхукет, экскурсии пхукет<span class="tr">EN: Phuket, Phuket hotels, tours to Phuket, Phuket excursions · TH: ภูเก็ต, โรงแรมภูเก็ต, ทัวร์ไปภูเก็ต, ทัวร์ชมเมืองภูเก็ต</span></td><td><span class="badge real">Real related queries</span></td></tr>
+            <tr><td>Russia</td><td>Flights from Russian cities</td><td>самолет москва пхукет, туры на пхукет из новосибирска / спб / екатеринбурга / хабаровска<span class="tr">EN: Moscow–Phuket flights; tours to Phuket from Novosibirsk / St Petersburg / Yekaterinburg / Khabarovsk · TH: เที่ยวบินมอสโก–ภูเก็ต; ทัวร์ภูเก็ตจากโนโวซีบีสค์ / เซนต์ปีเตอร์สเบิร์ก / เยคาเตรินเบิร์ก / ฮาบารอฟสค์</span></td><td><span class="badge real">Real related queries</span></td></tr>
+            <tr><td>Russia</td><td>Airport moment</td><td>аэропорт пхукет, онлайн табло пхукет<span class="tr">EN: Phuket airport, Phuket online arrivals board · TH: สนามบินภูเก็ต, ตารางเที่ยวบินออนไลน์ภูเก็ต</span></td><td><span class="badge real">Real related queries</span></td></tr>
+            <tr><td>Russia</td><td>Food and drink on the trip</td><td>кокосовая вода, что попробовать в Таиланде, фрукты Таиланда, тайская еда<span class="tr">EN: coconut water, what to try in Thailand, Thai fruit, Thai food · TH: น้ำมะพร้าว, ของที่ควรลองในไทย, ผลไม้ไทย, อาหารไทย</span></td><td><span class="badge sample">Example themes</span> — coconut water is a real Russian query; the longer food phrases were too thin on Trends to treat as volume leaders</td></tr>
+            <tr><td>India</td><td>Trip planning</td><td>Thailand trip, Thailand package, Thailand itinerary, Phuket things to do</td><td><span class="badge real">Real Trends queries</span></td></tr>
+            <tr><td>India</td><td>Honeymoon / wedding</td><td>Thailand honeymoon</td><td><span class="badge real">Real Trends query</span> (smaller than “trip” / “package”)</td></tr>
+            <tr><td>India</td><td>Coconut water (home + travel)</td><td>coconut water, tender coconut water, नारियल पानी, coconut water can<span class="tr">नारियल पानी — EN: coconut water · TH: น้ำมะพร้าว</span></td><td><span class="badge real">Real Trends queries</span></td></tr>
+            <tr><td>India</td><td>Vegetarian food on the trip</td><td>Thailand vegetarian, vegetarian food Phuket, Jain food Thailand</td><td><span class="badge sample">Example themes</span> — “Thailand vegetarian” is visible but very small on Trends</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block" id="journey">
+      <h2>3. Interests and the visitor journey</h2>
+      <p class="lead">What they look for, and where Malee could appear, from the first search at home to a bottle in a 7-Eleven on the beach.</p>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Russian visitors</h3>
+          <ul class="plain">
+            <li><strong>Where they go.</strong> Phuket is the main gateway (about 1.12 million airport arrivals in 2025). Pattaya and Bangkok also appear in search, but Phuket leads routine destination search.</li>
+            <li><strong>When they come.</strong> A sharp November–March peak, quiet mid-year — both in arrivals and in Google interest for «Пхукет» <span class="tr" style="display:inline">EN: Phuket · TH: ภูเก็ต</span>.</li>
+            <li><strong>How they book.</strong> Search language is package-tour heavy: туры, горящие туры <span class="tr" style="display:inline">EN: tours, last-minute tours · TH: ทัวร์, ทัวร์ราคาพิเศษช่วงนาทีสุดท้าย</span>, hotels, excursions, and flights from Moscow and other cities.</li>
+            <li><strong>Spend.</strong> ฿113.95 billion in 2025 receipts, or about ฿60,010 per arrival (calculated from MOTS totals). A high-value market.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Indian visitors</h3>
+          <ul class="plain">
+            <li><strong>What attracts them.</strong> TAT analysis reported in <a href="https://www.nationthailand.com/news/tourism/40069726" target="_blank" rel="noopener">The Nation, 13 Aug 2026</a>: Thai food is the leading attraction, then beaches, then spa and wellness. TAT’s earlier SATTE 2025 briefing also listed beach, cuisine, nightlife, wellness and heritage, with Bangkok, Chon Buri, Phuket, Krabi and Surat Thani as top destinations (<a href="https://www.tatnews.org/2025/02/thailand-showcases-tourism-potential-at-satte-2025-in-new-delhi/" target="_blank" rel="noopener">TAT Newsroom, 20 Feb 2025</a>).</li>
+            <li><strong>Who they are.</strong> Same Aug 2026 briefing: 68.63% free independent travellers, 31.37% tour groups; 59.68% first-time visitors. Average stay about 7.17 days; published spend ฿6,203 per day or about ฿36,354 per trip.</li>
+            <li><strong>Weddings.</strong> Wedding and celebration travel is a TAT priority, especially November–March. The tourism minister argued that a 30-day visa-free stay is needed for Indian wedding groups (same article, 13 Aug 2026).</li>
+            <li><strong>Vegetarian food.</strong> Dietary needs, including vegetarian meals, are a known requirement for Indian wedding groups and many leisure visitors. Treat specific menu-gap statistics as something to confirm with hotels and operators — not invented here.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Middle East — later phase</h3>
+          <ul class="plain">
+            <li>Champ also liked opening this work to Middle East travellers later. This mock-up does not yet include that market’s arrival or search data.</li>
+            <li>Any later brief should add Arabic (and English) search terms, and a clear <strong>halal</strong> note on ingredients, certification and where products can be sold or sampled.</li>
+            <li>Phuket already has new Middle East air connectivity in the 2026 high season (for example Kuwait Airways Kuwait–Phuket, reported by <a href="https://www.thephuketnews.com/phuket-arrivals-dip-as-four-new-direct-routes-set-to-launch-101767.php" target="_blank" rel="noopener">The Phuket News, 29 Sep 2026</a>).</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin-top:22px">Touchpoints along the journey</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Stage</th><th>Where they are</th><th>What they are doing</th><th>Malee opening (proposal)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Pre-trip search</td><td>Home, on Google or Yandex, Instagram, YouTube, Telegram</td><td>Comparing Phuket hotels, packages, itineraries, “what to try”</td><td>Russian and Hindi/English landing pages; search ads on destination and “what to drink / try” terms</td></tr>
+            <tr><td>Airport</td><td>Phuket (HKT) and Suvarnabhumi (BKK)</td><td>Landing, waiting, first purchase in Thailand</td><td>Malee Coco sampling and visible chilled placement in airside/landside retail</td></tr>
+            <tr><td>Hotel</td><td>Resorts and city hotels, including wedding venues</td><td>Minibar, breakfast, welcome drinks, events</td><td>Hotel listing, welcome-drink tie-ins, vegetarian-friendly juice options for Indian groups</td></tr>
+            <tr><td>Convenience</td><td>7-Eleven and other stores near beaches and hotels</td><td>Quick, cold, familiar drinks</td><td>Front-of-fridge placement, Russian/Hindi shelf talkers in high-tourist stores</td></tr>
+            <tr><td>Beach and tours</td><td>Patong and other beaches, excursion boats, tour desks</td><td>Heat, hydration, souvenirs</td><td>Cold-box sampling; tour-operator bundles; “what to try in Thailand” content</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">TAT says YouTube, Instagram and WhatsApp are the main digital channels for reaching Indian travellers (<a href="https://www.nationthailand.com/news/tourism/40069726" target="_blank" rel="noopener">The Nation, 13 Aug 2026</a>). For Russians, Telegram, VK and Yandex are the practical additions alongside YouTube. Those platform choices are recommendations for a media brief, not measured reach figures.</p>
+    </section>
+
+    <section class="block" id="capture">
+      <h2>4. How Malee can capture it</h2>
+      <p class="lead">All of the items below are <strong>proposals</strong> for discussion with Marketing, Commercial and Operations. None is an approved campaign.</p>
+
+      <div class="cards">
+        <div class="card">
+          <h3>SEO — be findable in their language</h3>
+          <ul class="plain">
+            <li>Russian landing pages around Phuket, “what to try in Thailand”, coconut water and fruit, with the queries above in the copy.</li>
+            <li>English and Hindi pages for “Thailand trip”, Phuket itineraries, coconut water and vegetarian-friendly drinks.</li>
+            <li>Google Maps / store finder so a visitor can type “Malee Coco” or «кокосовая вода» <span class="tr" style="display:inline">EN: coconut water · TH: น้ำมะพร้าว</span> near Patong, Kata or Suvarnabhumi and see a nearby shop.</li>
+            <li>For Russia, also register and optimise on Yandex (Webmaster and Business), not only Google.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>SEM — paid search ideas</h3>
+          <ul class="plain">
+            <li>Russia: Yandex Direct plus Google Ads, bid on destination + hotel/tour terms only where the ad is honestly about a drink they can buy in Thailand — not on competing with tour operators for “туры на пхукет” <span class="tr" style="display:inline">EN: tours to Phuket · TH: ทัวร์ไปภูเก็ต</span> unless there is a travel partner. Safer: coconut water, what to try, airport, fruit, and brand terms.</li>
+            <li>India: Google Ads on Thailand trip / Phuket things to do (content and store-locator ads), coconut water / नारियल पानी <span class="tr" style="display:inline">EN: coconut water · TH: น้ำมะพร้าว</span> (product), and honeymoon/wedding drink occasions.</li>
+            <li>Pull real volumes and suggested bids from Keyword Planner and Wordstat before any budget is set.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Social and platforms</h3>
+          <ul class="plain">
+            <li><strong>Russians:</strong> Telegram, VK, Yandex and YouTube — short “first day in Phuket” and “what to drink in the heat” films in Russian.</li>
+            <li><strong>Indians:</strong> Instagram, YouTube and WhatsApp, as TAT already uses, plus Reels around food, beaches and wedding/honeymoon tables.</li>
+            <li>No follower or view targets are shown here; those need a media plan.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Airport and on-ground activations</h3>
+          <ul class="plain">
+            <li><strong>Airports:</strong> sampling of Malee Coco at Phuket (HKT) — the main Russian gateway — and Suvarnabhumi (BKK), where many Indians arrive. Peak staffing in November–March, plus Indian holiday and wedding waves.</li>
+            <li><strong>Hotels and wedding venues:</strong> welcome drinks and banquet juice lists, with vegetarian-friendly options clearly marked.</li>
+            <li><strong>Convenience and beach:</strong> 7-Eleven and tourist-strip cold boxes; simple Russian and Hindi talkers.</li>
+            <li><strong>Tour operators:</strong> include a bottle or voucher in Phuket excursion packs, especially Russian-language desks.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin-top:22px">Draft ad copy</h3>
+      <p class="note">These are <span class="badge draft">Drafts</span> for a creative review. They do not make medical claims. They have not been legally checked.</p>
+      <div class="cards">
+        <div class="ad">
+          <div class="meta">Draft · Google / Yandex · Russia · Russian</div>
+          <h4>Malee Coco — натуральная кокосовая вода из Таиланда</h4>
+          <p class="tr">EN: Malee Coco — natural coconut water from Thailand<br>TH: Malee Coco — น้ำมะพร้าวธรรมชาติจากประเทศไทย</p>
+          <p>Освежитесь на Пхукете. Ищите Malee Coco в аэропорту и у моря.</p>
+          <p class="tr">EN: Refresh yourself in Phuket. Look for Malee Coco at the airport and by the sea.<br>TH: สดชื่นที่ภูเก็ต มองหา Malee Coco ที่สนามบินและริมทะเล</p>
+          <p class="note">Possible queries: кокосовая вода, что попробовать в Таиланде, аэропорт пхукет, фрукты Таиланда, Malee Coco.<span class="tr">EN: coconut water, what to try in Thailand, Phuket airport, Thai fruit, Malee Coco · TH: น้ำมะพร้าว, ของที่ควรลองในไทย, สนามบินภูเก็ต, ผลไม้ไทย, Malee Coco</span></p>
+        </div>
+        <div class="ad">
+          <div class="meta">Draft · Google · India · English</div>
+          <h4>Malee Coco — Thailand’s coconut water</h4>
+          <p>Start your Phuket trip with a cold coconut water. Find Malee Coco at the airport and nearby stores.</p>
+          <p class="note">Possible queries: coconut water, Phuket things to do, Thailand trip, Thai fruit, Thailand itinerary.</p>
+        </div>
+        <div class="ad">
+          <div class="meta">Draft · Google · India · Hindi + English brand</div>
+          <h4>Malee Coco — थाईलैंड का नारियल पानी</h4>
+          <p class="tr">EN: Malee Coco — Thailand’s coconut water<br>TH: Malee Coco — น้ำมะพร้าวจากประเทศไทย</p>
+          <p>फुकेत और बैंकॉक की यात्रा पर ताजगी। एयरपोर्ट और स्टोर पर देखें Malee Coco.</p>
+          <p class="tr">EN: Stay fresh on your Phuket and Bangkok trip. Look for Malee Coco at the airport and in stores.<br>TH: สดชื่นในทริปภูเก็ตและกรุงเทพฯ มองหา Malee Coco ที่สนามบินและในร้านค้า</p>
+          <p class="note">Possible queries: नारियल पानी, थाईलैंड यात्रा, फुकेत, coconut water, Thailand honeymoon.<span class="tr">EN: coconut water, Thailand trip, Phuket, coconut water, Thailand honeymoon · TH: น้ำมะพร้าว, ทริपประเทศไทย, ภูเก็ต, น้ำมะพร้าว, ทริปฮันนีมูนประเทศไทย</span></p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:22px">KPIs to track — proposed</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Channel</th><th>What to watch</th><th>Why it matters</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SEO</td><td>Organic sessions from RU and IN, in Russian and Hindi/English; rankings for the real queries above; store-finder uses</td><td>Shows whether the language pages are actually being found</td></tr>
+            <tr><td>SEM</td><td>Impressions, click-through rate, cost per click, cost per store-finder use or sample voucher, branded search lift</td><td>Keeps spend honest once Keyword Planner / Wordstat volumes and bids exist</td></tr>
+            <tr><td>Airport sampling</td><td>Bottles sampled at HKT and BKK, cost per sample, same-day purchase or scan rate if a voucher is used</td><td>Tells us whether the first-hour welcome works</td></tr>
+            <tr><td>On-ground retail</td><td>Sell-through in tourist 7-Elevens and hotel shops, by week and by area (Patong, Kata, Suvarnabhumi)</td><td>Needs Malee or distributor sell-out data — not on this public page</td></tr>
+            <tr><td>Social</td><td>View-through and saved posts in Russian and in India-facing creative; WhatsApp / Telegram click-outs</td><td>Supports the search campaign, not a substitute for it</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Retail sell-through and any internal Malee volumes are deliberately left off this mock-up. They should stay in an internal brief after the usual approvals for company data.</p>
+    </section>
+
+    <section class="block" id="sources">
+      <h2>Sources, dates and next steps</h2>
+      <p class="lead">Retrieved or opened on 17 November 2026 (Asia/Bangkok), unless a source date is given. Every real number on this page comes from the links below. Calculated, sample or draft items are labelled as such. No confidential Malee data is used.</p>
+      <ol class="plain">
+        <li><a href="https://thailandstats.com/tourism/visitors-from/russia" target="_blank" rel="noopener">ThailandStats: tourists from Russia</a> — MOTS monthly and annual arrivals; data through Aug 2026, page updated 23 Sep 2026.</li>
+        <li><a href="https://thailandstats.com/tourism/visitors-from/india" target="_blank" rel="noopener">ThailandStats: tourists from India</a> — same series for India.</li>
+        <li><a href="https://www.nationthailand.com/news/tourism/40073019" target="_blank" rel="noopener">The Nation, 2 Nov 2026</a> — MOTS Jan–Oct 2026 totals: India 1,924,417; Russia 1,414,341; all markets 25,464,306.</li>
+        <li><a href="https://www.nationthailand.com/news/general/40060629" target="_blank" rel="noopener">The Nation, 1 Jan 2026</a> — MOTS 2025 year-end arrivals and receipts, including Russia ฿113,950 million and India ฿93,862 million.</li>
+        <li><a href="https://www.nationthailand.com/news/tourism/40069726" target="_blank" rel="noopener">The Nation, 13 Aug 2026</a> — TAT India briefing: spend, stay, FIT share, attractions, wedding market, 2026–27 targets, YouTube/Instagram/WhatsApp.</li>
+        <li><a href="https://www.tatnews.org/2025/02/thailand-showcases-tourism-potential-at-satte-2025-in-new-delhi/" target="_blank" rel="noopener">TAT Newsroom, 20 Feb 2025</a> — SATTE 2025 India market notes, destinations and activities.</li>
+        <li><a href="https://www.thaiexaminer.com/thai-news-foreigners/2026/08/09/thailand-pushes-on-to-attract-more-than-2-million-russian-tourists-in-2026-despite-the-pattaya-murders/" target="_blank" rel="noopener">Thai Examiner, 9 Aug 2026</a> — official push for more than 2 million Russian arrivals in 2026.</li>
+        <li><a href="https://c9hotelworks.com/wp-content/uploads/2026/03/Phuket-Hotel-Tourism-Update.pdf" target="_blank" rel="noopener">C9 Hotelworks, Phuket Hotel &amp; Tourism Update 2026</a> — Russia about 1.1 million visitors in 2025, largest source market.</li>
+        <li><a href="https://www.novostiphuketa.asia/tailand-prinyal-rekordnye-1-899-mln-turistov-iz-rossii-za-god-23330.php" target="_blank" rel="noopener">Novosti Phuketa, 6 Jan 2026</a> — Phuket airport immigration 2025: Russia 1.12 million, India 621,100.</li>
+        <li><a href="https://www.traveldailynews.asia/destinations/phuket-tourism-investment-luxury-hospitality-growth/" target="_blank" rel="noopener">TravelDailyNews Asia</a> — C9 figures, Jan–Sep 2026: Russia 703,200 arrivals, −6.2%.</li>
+        <li><a href="https://www.thephuketnews.com/phuket-arrivals-dip-as-four-new-direct-routes-set-to-launch-101767.php" target="_blank" rel="noopener">The Phuket News, 29 Sep 2026</a> — TAT Jan–Aug 2026: Russia 661,876, India 393,277, total visitors 9.2 million.</li>
+        <li><a href="https://gs.statcounter.com/search-engine-market-share/all/russian-federation" target="_blank" rel="noopener">Statcounter, Russia, Oct 2026</a> — Yandex 70.22%, Google 28.36%.</li>
+        <li><a href="https://gs.statcounter.com/search-engine-market-share/all/india" target="_blank" rel="noopener">Statcounter, India, Oct 2026</a> — Google 98.06%.</li>
+        <li><a href="https://trends.google.com/trends/explore" target="_blank" rel="noopener">Google Trends</a> — interest-over-time and related queries, geo=RU and geo=IN, retrieved 17 Nov 2026. Latest week 15 Nov 2026 partial.</li>
+        <li><a href="https://wordstat.yandex.com/" target="_blank" rel="noopener">Yandex Wordstat</a> — the tool to use next for Russian search volumes (not pulled here).</li>
+      </ol>
+
+      <h3 style="margin-top:22px">Suggested next steps</h3>
+      <div class="how">
+        <article><strong>1. Get real volumes</strong> Ask Paid Media to pull Google Keyword Planner (IN + RU) and Yandex Wordstat (RU) for the query lists above, then size a test budget.</article>
+        <article><strong>2. Language pages</strong> Draft Russian and Hindi/English landing pages and a public store finder, without putting any internal sales data on a public site.</article>
+        <article><strong>3. Airport trial</strong> Cost a Malee Coco sampling trial at HKT and BKK for the remainder of high season, with a simple voucher or QR to measure take-up.</article>
+        <article><strong>4. Keep it internal until you say go</strong> This HTML is public-safe, but it is still a mock-up. Nothing has been published. Middle East / halal can be phase two.</article>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div>
+      Mock-up for Piya Mekanand, Head of AI, Malee Group PCL. Compiled 17 November 2026, Asia/Bangkok. Public sources only. Not a live data feed and not an approved marketing plan.
+    </div>
+  </footer>
+
+  <script>
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const ru2025 = [255920,230600,235682,155314,83627,73616,81098,79573,76907,145764,214523,266213];
+    const ru2026 = [272959,231797,221202,137592,83182,65518,86768,80854,null,null,null,null];
+    const in2025 = [185809,169988,187973,206286,228544,205299,189303,190604,207195,213858,236232,266228];
+    const in2026 = [231184,185930,208484,206641,224490,163378,150985,165678,null,null,null,null];
+
+    const tMonths = ['Jan 25','Feb 25','Mar 25','Apr 25','May 25','Jun 25','Jul 25','Aug 25','Sep 25','Oct 25','Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26','May 26','Jun 26','Jul 26','Aug 26','Sep 26','Oct 26','Nov 26'];
+    // Google Trends monthly averages, Jan 2025–Nov 2026, retrieved 17 Nov 2026
+    const ruPhuket = [40.8,34.5,32.2,23.0,19.5,19.4,27.5,27.6,26.5,34.8,41.0,33.0,45.5,37.5,32.0,23.5,21.6,19.5,28.2,23.4,25.5,36.8,38.0];
+    const ruPattaya = [12.5,10.2,10.2,7.2,6.2,6.2,8.2,8.2,9.0,9.8,11.4,9.8,13.2,10.5,8.6,6.5,6.8,6.5,8.5,8.0,9.0,9.5,9.3];
+    const ruBangkok = [11.5,9.5,17.2,7.2,6.8,10.2,66.2,36.6,22.0,10.8,11.6,10.0,14.2,10.5,10.4,8.0,8.4,9.5,13.0,12.8,17.0,11.8,11.3];
+    const ruCoco = [9.5,17.2,46.2,18.0,10.0,25.2,37.8,24.6,0.0,15.0,13.0,10.2,19.2,36.8,34.2,34.5,67.4,45.0,58.8,12.4,13.0,23.2,27.7];
+    const inPhuket = [24.5,23.2,24.4,23.5,24.8,25.0,23.8,24.4,25.0,28.2,36.4,33.0,31.8,27.5,29.0,26.8,25.8,22.2,20.2,25.4,24.8,25.2,26.7];
+    const inPattaya = [17.8,16.2,17.8,16.5,16.8,17.6,17.0,17.2,16.2,16.5,20.8,19.8,19.5,17.5,16.2,14.5,15.0,14.0,15.0,16.0,15.5,13.2,14.3];
+    const inBangkok = [42.5,40.5,57.4,39.8,40.5,41.6,39.0,38.4,40.2,43.8,69.0,60.8,58.0,56.2,58.0,47.0,46.4,45.8,39.0,41.2,48.8,39.0,44.0];
+    const inTrip = [70.2,56.0,62.8,66.0,60.8,60.0,58.2,59.6,61.0,70.8,92.6,95.0,82.5,78.0,73.4,75.0,66.8,61.0,57.8,64.2,59.8,61.5,66.7];
+    const inPkg = [69.0,55.5,63.4,56.2,58.8,54.2,49.0,52.4,49.5,60.0,84.0,82.8,78.5,77.2,65.6,64.8,53.2,54.0,40.8,43.0,41.5,37.2,36.3];
+    const inHoney = [7.8,7.0,8.8,5.2,3.8,6.4,5.2,5.2,4.0,8.2,8.0,10.5,9.2,7.2,7.4,2.2,6.2,1.8,3.8,5.2,4.8,4.8,4.3];
+    const inCoco = [58.0,76.2,79.2,77.2,64.0,59.8,59.8,61.6,62.5,60.5,65.8,62.2,65.2,81.5,87.4,92.0,77.8,69.0,58.8,66.6,70.0,62.0,54.3];
+    const inThaiFood = [4.8,5.5,4.6,4.5,4.2,4.0,4.0,4.4,3.8,4.2,9.0,10.0,10.0,22.0,9.2,8.5,8.0,7.2,9.8,18.6,12.0,4.0,4.0];
+    const inTodo = [31.8,38.8,36.8,44.8,33.2,38.6,27.5,27.4,21.5,37.2,47.2,38.8,33.0,33.2,33.4,34.0,30.2,17.5,15.8,17.4,27.0,31.5,22.0];
+    const inItin = [45.5,37.5,38.4,37.5,36.8,29.2,32.2,33.8,24.8,38.0,67.6,83.0,77.8,67.8,43.0,28.2,26.0,34.8,25.5,20.4,30.2,28.2,21.3];
+    const inFruit = [9.0,4.0,7.6,4.0,0.0,6.6,8.0,27.8,0.0,4.8,24.4,12.8,23.5,27.0,7.4,15.5,17.8,22.5,13.2,15.8,4.5,15.0,14.3];
+
+    const ink = '#1b241c';
+    const muted = '#5a635a';
+    Chart.defaults.font.family = '"Libre Franklin", system-ui, sans-serif';
+    Chart.defaults.color = muted;
+    Chart.defaults.borderColor = '#e0d8c8';
+
+    function arrivalChart(id, s2025, s2026, c2025, c2026) {
+      new Chart(document.getElementById(id), {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: [
+            { label: '2025', data: s2025, backgroundColor: c2025, borderRadius: 4 },
+            { label: '2026 (Jan–Aug; Jun incomplete)', data: s2026, backgroundColor: c2026, borderRadius: 4 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top' },
+            tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.parsed.y == null ? 'n/a' : ctx.parsed.y.toLocaleString('en-US')) } }
+          },
+          scales: {
+            y: { beginAtZero: true, ticks: { callback: v => v >= 1000 ? (v/1000) + 'k' : v } }
+          }
+        }
+      });
+    }
+    arrivalChart('chartRuArrivals', ru2025, ru2026, '#1b6b48', '#8fbfa4');
+    arrivalChart('chartInArrivals', in2025, in2026, '#245e7a', '#8fb4c6');
+
+    function lineChart(id, datasets, yMax) {
+      new Chart(document.getElementById(id), {
+        type: 'line',
+        data: { labels: tMonths, datasets: datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: { legend: { position: 'top' } },
+          scales: {
+            y: { min: 0, max: yMax || 100, title: { display: true, text: 'Relative interest (0–100)' } },
+            x: { ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 8 } }
+          }
+        }
+      });
+    }
+    const lw = 2;
+    lineChart('chartRuDest', [
+      { label: 'Пхукет (Phuket / ภูเก็ต)', data: ruPhuket, borderColor: '#1b6b48', backgroundColor: 'rgba(27,107,72,0.12)', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw },
+      { label: 'Паттайя (Pattaya / พัทยา)', data: ruPattaya, borderColor: '#8a5a10', backgroundColor: 'transparent', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw },
+      { label: 'Бангкок (Bangkok / กรุงเทพฯ)', data: ruBangkok, borderColor: '#245e7a', backgroundColor: 'transparent', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw }
+    ]);
+    lineChart('chartRuCoco', [
+      { label: 'кокосовая вода (coconut water / น้ำมะพร้าว)', data: ruCoco, borderColor: '#1b6b48', backgroundColor: 'rgba(27,107,72,0.15)', tension: 0.25, fill: true, pointRadius: 0, borderWidth: lw }
+    ]);
+    lineChart('chartInDest', [
+      { label: 'Bangkok', data: inBangkok, borderColor: '#245e7a', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw },
+      { label: 'Phuket', data: inPhuket, borderColor: '#1b6b48', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw },
+      { label: 'Pattaya', data: inPattaya, borderColor: '#8a5a10', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw }
+    ]);
+    lineChart('chartInTrip', [
+      { label: 'Thailand trip', data: inTrip, borderColor: '#1b6b48', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw },
+      { label: 'Thailand package', data: inPkg, borderColor: '#245e7a', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw },
+      { label: 'Thailand honeymoon', data: inHoney, borderColor: '#8a5a10', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw }
+    ]);
+    lineChart('chartInCoco', [
+      { label: 'coconut water', data: inCoco, borderColor: '#1b6b48', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw },
+      { label: 'Thai food', data: inThaiFood, borderColor: '#245e7a', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw }
+    ]);
+    lineChart('chartInTodo', [
+      { label: 'Thailand itinerary', data: inItin, borderColor: '#245e7a', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw },
+      { label: 'Phuket things to do', data: inTodo, borderColor: '#1b6b48', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw },
+      { label: 'Thai fruit', data: inFruit, borderColor: '#8a5a10', tension: 0.25, fill: false, pointRadius: 0, borderWidth: lw }
+    ]);
+  </script>
+</body>
+</html>
